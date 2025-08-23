@@ -6,40 +6,54 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            background: #f4f6f9;
             text-align: center;
             padding: 30px;
         }
         .container {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 12px;
             display: inline-block;
-            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+            max-width: 600px;
         }
         input {
             margin: 10px;
-            padding: 8px;
-            width: 200px;
+            padding: 10px;
+            width: 220px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
         }
         button {
-            padding: 10px 20px;
-            background: #4CAF50;
+            padding: 12px 25px;
+            background: #007bff;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
+            font-size: 16px;
         }
         button:hover {
-            background: #45a049;
+            background: #0056b3;
         }
         h2 {
             color: #333;
         }
         img {
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+        .plot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .prediction-plot {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -57,10 +71,19 @@
             <h2>{{ prediction_text }}</h2>
         {% endif %}
 
-        <h2>Data Visualizations</h2>
-        <img src="{{ url_for('static', filename='plots/area_price.png') }}" width="400" alt="Scatter plot showing relationship between house area and price"><br>
-        <img src="{{ url_for('static', filename='plots/bedrooms_price.png') }}" width="400" alt="Scatter plot showing relationship between number of bedrooms and price"><br>
-        <img src="{{ url_for('static', filename='plots/age_price.png') }}" width="400" alt="Scatter plot showing relationship between house age and price"><br>
+        {% if show_prediction_graph %}
+            <div class="prediction-plot">
+                <h2>📈 Prediction Graph</h2>
+                <img src="{{ url_for('static', filename='plots/prediction.png') }}" alt="Predicted Price Graph">
+            </div>
+        {% endif %}
+
+        <h2>📊 Data Visualizations</h2>
+        <div class="plot-grid">
+            <img src="{{ url_for('static', filename='plots/area_price.png') }}" alt="Area vs Price">
+            <img src="{{ url_for('static', filename='plots/bedrooms_price.png') }}" alt="Bedrooms vs Price">
+            <img src="{{ url_for('static', filename='plots/age_price.png') }}" alt="Age vs Price">
+        </div>
     </div>
 </body>
 </html>
